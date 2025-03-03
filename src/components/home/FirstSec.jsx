@@ -1,0 +1,102 @@
+import React from "react";
+import { motion } from "framer-motion";
+import { useTheme } from "../../ThemeProvider";
+import { Link } from "react-router-dom";
+
+const FirstSec = () => {
+  const { isDarkTheme } = useTheme();
+
+  return (
+    <div className=" container flex flex-col justify-center mx-auto  px-4 ">
+      <div className="flex flex-col justify-center md:flex-row gap-10 ">
+        {/* Right Column */}
+        <motion.div
+          className="  container flex-1 flex items-center  justify-center w-full md:w-1/2 bg-cover bg-center"
+          initial={{ opacity: 0, x: -100 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1.2, ease: "easeOut" }}
+        >
+          <motion.img
+            src={
+              isDarkTheme
+                ? "/images/hero image dark mode.png"
+                : "/images/hero image orginal.png"
+            }
+            alt="Description"
+            // className="md:mt-10 md:p-14 p-5 hidden md:block    rounded-lg"
+            className="md:mt-20  hidden md:block p-6"
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 0.5 }}
+          />
+        </motion.div>
+
+        {/* Left Column */}
+        <motion.div
+          className=" container w-full flex-1 justify-center md:mt-10 md:py-20 md:w-1/2 mb-8 md:mb-0 "
+          initial={{ opacity: 0, x: 100 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1.2, ease: "easeOut", delay: 0.3 }}
+        >
+          <div className="flex-col pr-10">
+            {/* Adjust font size responsively for the large heading */}
+            <h1 className="text-6xl  sm:text-5xl md:text-4xl lg:text-7xl xl:text-9xl text-right text-secondaryBG">
+              أ/احمد
+            </h1>
+            <h1
+              className={`text-6xl md:mr-20 sm:text-5xl md:text-4xl lg:text-7xl xl:text-9xl text-center md:text-center text-primaryBG 
+               ${isDarkTheme ? `text-white` : `text-primaryBG`}
+              `}
+            >
+              هديب
+            </h1>
+          </div>
+
+          <div className="flex flex-col justify-end">
+            <div className="my-3 flex justify-end">
+              {/* Responsive font sizes for the subheading */}
+              <h2
+                className={`text-4xl sm:text-3xl md:text-6xl  text-center
+                   ${isDarkTheme ? `text-white` : `text-primaryBG`}
+                `}
+              >
+                متشيلش هم{" "}
+                <span className="text-4xl sm:text-3xl md:text-6xl  text-secondaryBG">
+                  الرياضة
+                </span>
+              </h2>
+            </div>
+
+            {/* Responsive divider */}
+            <div className="flex justify-end">
+              <div className="w-24 sm:w-28 md:w-72 h-1 bg-primaryBG mb-"></div>
+            </div>
+          </div>
+
+          <Link to="/myprofile">
+            <div className="flex justify-center sm:justify-start my-6 md:my-16">
+              {" "}
+              <motion.button
+                style={{ fontFamily: "Lamsa-font-Bold" }}
+                className="flex bg-gradient-to-r from-primaryBG to-GreidentColor2 text-white px-4 py-2 md:px-6 md:py-3 rounded-xl font-bold text-lg md:text-2xl transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, ease: "easeOut", delay: 1.2 }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <img
+                  className="h-8 w-8 md:h-8 md:w-10"
+                  src="/images/flag_4957085.png"
+                  alt="Flag"
+                />
+                <span>! ابدأ رحلتك دلوقتي</span>
+              </motion.button>
+            </div>
+          </Link>
+        </motion.div>
+      </div>
+    </div>
+  );
+};
+
+export default FirstSec;
