@@ -5,7 +5,7 @@ import { useTheme } from "../../ThemeProvider";
 import { HiOutlineLogin } from "react-icons/hi";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../store/slices/auth";
-import OverlayPortal from "../../layouts/OvarlayPortal";
+// import OverlayPortal from "../../layouts/OvarlayPortal";
 
 const Navbar = () => {
   const [nav, setNav] = useState(false);
@@ -30,7 +30,7 @@ const Navbar = () => {
 
   return (
     <>
-      {nav && <OverlayPortal onClick={handleOutsideClick} />}
+      {/* {nav && <OverlayPortal onClick={handleOutsideClick} />} */}
 
       <div
         style={{ fontFamily: "Lamsa-font-Bold" }}
