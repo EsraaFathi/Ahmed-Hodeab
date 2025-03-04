@@ -3,9 +3,9 @@ const axiosInstance = axios.create({
   baseURL: "https://api.ahmedhodeab.com/",
   // baseURL: "http://localhost:5000/",
 
-  //   withCredentials: true,
-  //   headers: { "Access-Control-Allow-Origin": "*" },
-  //   credentials: "include",
+  // withCredentials: true,
+  headers: { "Access-Control-Allow-Origin": "*" },
+  // credentials: "include",
 });
 
 axiosInstance.interceptors.request.use(

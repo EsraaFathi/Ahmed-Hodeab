@@ -11,42 +11,41 @@ import {
   FaGraduationCap,
 } from "react-icons/fa";
 import { useTheme } from "../../ThemeProvider";
-import { State, City } from "country-state-city";
+// import { State, City } from "country-state-city";
 import { Field, ErrorMessage } from "formik";
 import "react-toastify/dist/ReactToastify.css";
-import { useEffect, useState } from "react";
-// import LocationSelector from "./LocationSelector";
+import { useState } from "react";
 
 const RegisterForm = ({ values, handleChange, handleBlur, setFieldValue }) => {
   const { isDarkTheme } = useTheme();
   const [isFocused, setIsFocused] = useState(false);
-  const [states, setStates] = useState([]);
-  const [cities, setCities] = useState([]);
-  useEffect(() => {
-    // Load Egypt's states
-    const egyptStates = State.getStatesOfCountry("EG");
-    // console.log(egyptStates);
-    // console.log(values);
+  // const [states, setStates] = useState([]);
+  // const [cities, setCities] = useState([]);
+  // useEffect(() => {
+  //   // Load Egypt's states
+  //   const egyptStates = State.getStatesOfCountry("EG");
+  //   // console.log(egyptStates);
+  //   // console.log(values);
 
-    setStates(egyptStates);
-  }, []);
+  //   setStates(egyptStates);
+  // }, []);
 
-  useEffect(() => {
-    if (values.governorate) {
-      const selectedState = states.find(
-        (state) => state.isoCode === values.governorate
-      );
-      if (selectedState) {
-        const citiesOfState = City.getCitiesOfState(
-          "EG",
-          selectedState.isoCode
-        );
-        setCities(citiesOfState);
-      }
-    } else {
-      setCities([]);
-    }
-  }, [values.governorate, states]);
+  // useEffect(() => {
+  //   if (values.governorate) {
+  //     const selectedState = states.find(
+  //       (state) => state.isoCode === values.governorate
+  //     );
+  //     if (selectedState) {
+  //       const citiesOfState = City.getCitiesOfState(
+  //         "EG",
+  //         selectedState.isoCode
+  //       );
+  //       setCities(citiesOfState);
+  //     }
+  //   } else {
+  //     setCities([]);
+  //   }
+  // }, [values.governorate, states]);
   const egyptGovernorates = {
     القاهرة: [
       "15 مايو",
