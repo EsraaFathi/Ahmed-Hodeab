@@ -71,7 +71,7 @@ const NewPassword = () => {
         isDarkTheme ? "bg-gray-800" : "bg-gray-100"
       }`}
       style={{
-        backgroundImage: "url('/images/screen back patt2-min.png')",
+        backgroundImage: "url('/images/patt2min.png')",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}

@@ -15,7 +15,7 @@ function DefaultLayout() {
       <Navbar />
       <div
         style={{
-          backgroundImage: "url('/images/screen back patt2-min.png')",
+          backgroundImage: "url('/images/patt2min.png')",
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
