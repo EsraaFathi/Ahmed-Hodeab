@@ -40,29 +40,18 @@ const Exam = () => {
     return () => window.removeEventListener("beforeunload", handleBeforeUnload);
   }, []);
 
+  // Auto-submit when reloading
   useEffect(() => {
-    // console.log("Updated Answers:", allAnswers);
-  }, [allAnswers]);
-  useEffect(() => {
-    // console.log("Updated selectedAnswers:", selectedAnswers);
-  }, [selectedAnswers]);
-
-  // // Auto-submit when reloading
-  // useEffect(() => {
-  //   const handleUnload = async () => {
-  //     await handleAutoSubmit();
-  //   };
-  //   window.addEventListener("beforeunload", handleUnload);
-  //   return () => window.removeEventListener("beforeunload", handleUnload);
-  // }, [allAnswers, examStartedAt]);
+    const handleUnload = async () => {
+      await handleAutoSubmit();
+    };
+    window.addEventListener("beforeunload", handleUnload);
+    return () => window.removeEventListener("beforeunload", handleUnload);
+  }, [allAnswers, examStartedAt]);
 
   // Timer for the exam
   useEffect(() => {
-    // console.log(allAnswers, "before answer");
-
-    // if (examData?.duration && examStartedAt && !examSubmitted) {
-    if (examData?.duration && examStartedAt) {
-      // console.log(allAnswers, "timeallAnswers");
+    if (examData?.duration && examStartedAt && !examSubmitted) {
       setTotalQuestions(examData.question.length);
 
       // Add examSubmitted to condition
@@ -75,11 +64,8 @@ const Exam = () => {
         setRemainingTime(Math.floor(timeLeft / 1000));
         timerRef.current = setInterval(() => {
           const newTimeLeft = startTime + durationInMs - Date.now();
-
           if (newTimeLeft <= 0) {
             clearInterval(timerRef.current);
-            // console.log(allAnswers, "allAnswers");
-
             handleAutoSubmit();
           } else {
             setRemainingTime(Math.floor(newTimeLeft / 1000));
@@ -87,39 +73,12 @@ const Exam = () => {
         }, 1000);
         return () => clearInterval(timerRef.current);
       } else {
-        // console.log(allAnswers, "elseAnswers");
-
         handleAutoSubmit();
       }
     }
   }, [examData, examStartedAt, examSubmitted]);
-  // }, [examData, examStartedAt, examSubmitted]);
-
   //
-  const handleAutoSubmit = async () => {
-    // if (examSubmitted) return; // Prevent duplicate submissions
 
-    setExamSubmitted(true); // Set before the API call to prevent multiple triggers
-    setTimeUp(true);
-    clearInterval(timerRef.current); // Stop the timer
-
-    // console.log(allAnswers, "testallAnswers");
-    try {
-      // console.log(allAnswers, "tttttllAnswers");
-
-      const result = await submitAnswer(allAnswers); // Submit the exam
-      localStorage.removeItem("examId");
-      localStorage.removeItem("examStartedAt");
-
-      if (result) {
-        setScore(result.score);
-        setPercentage(result.percentage);
-        setEnd(true);
-      }
-    } catch (error) {
-      console.error("Auto-submit error:", error);
-    }
-  };
   // Stop the timer if user submits early
   const handleSubmit = async () => {
     if (allAnswers.length !== examData.question.length) {
@@ -140,9 +99,50 @@ const Exam = () => {
     }
   };
 
-  const submitAnswer = async () => {
-    // console.log(allAnswers, "allAnswers");
+  // const handleAutoSubmit = async () => {
+  //   if (!examSubmitted) {
+  //     // Check if exam is already submitted
+  //     setTimeUp(true);
+  //     clearInterval(timerRef.current); // Stop the timer when time is up
+  //     const result = await submitAnswer();
+  //     localStorage.removeItem("examId");
+  //     localStorage.removeItem("examStartedAt");
+  //     console.log(allAnswers);
 
+  //     if (result) {
+  //       setScore(result.score);
+  //       setPercentage(result.percentage);
+  //       setEnd(true);
+  //     }
+  //   }
+  // };
+  const handleAutoSubmit = async () => {
+    if (examSubmitted) return; // Prevent duplicate submissions
+
+    setExamSubmitted(true); // Set before the API call to prevent multiple triggers
+    setTimeUp(true);
+    clearInterval(timerRef.current); // Stop the timer
+
+    // Ensure all answers are stored before submission
+    // if (selectedAnswers.length > 0) {
+    setAllAnswers((prev) => [...prev, ...selectedAnswers]);
+    // }
+    try {
+      const result = await submitAnswer(); // Submit the exam
+      localStorage.removeItem("examId");
+      localStorage.removeItem("examStartedAt");
+
+      if (result) {
+        setScore(result.score);
+        setPercentage(result.percentage);
+        setEnd(true);
+      }
+    } catch (error) {
+      console.error("Auto-submit error:", error);
+    }
+  };
+
+  const submitAnswer = async () => {
     try {
       const response = await axiosInstance.post(
         `exams/${examData._id}/submit`,
@@ -157,7 +157,7 @@ const Exam = () => {
           },
         }
       );
-      // console.log(allAnswers, "allAnswers");
+      console.log(allAnswers, "allAnswers");
 
       return response.data;
     } catch (err) {
@@ -221,20 +221,10 @@ const Exam = () => {
             {/* handleSubmit here */}
             <div className="flex flex-col justify-center items-center ">
               <div className="text-center my-52">
-                <h2 className="text-3xl font-bold text-red-600 mb-4">
+                <h2 className="text-5xl font-bold text-red-600 mb-4">
                   😒 وقت الامتحان انتهى
                 </h2>
-                <p className="my-5">تم تسليم الامتحان تلقائياً</p>
-                <p className="md:text-2xl text-lg mb-4">
-                  ✌️ الدرجة النهائية بتاعتك هيا {score} من
-                  {questions.length}
-                </p>
-
-                <p className="md:text-2xl text-lg mb-4">
-                  ⚡النسبة المئوية {percentage}
-                </p>
-
-                <p className="text-2xl  mb-4">{totalQuestions}🟰عدد الأسئلة</p>
+                <p>تم تسليم الامتحان تلقائياً</p>
               </div>
               <Link to="/">
                 <button className="bg-gradient-to-r text-center from-GreidentColor2 to-secondaryBG shadow-md shadow-gray-800  text-white px-6 mb-5 py-1 rounded-lg font-bold text-lg transition-all duration-300 transform hover:scale-105  hover:shadow-gray-800 hover:shadow-md">
@@ -296,7 +286,7 @@ const Exam = () => {
                             checked={selectedAnswers.includes(key)}
                             onChange={() => {
                               setSelectedAnswers([key]);
-                              // console.log(key);
+                              // console.log(allAnswers);
                             }}
                             className="form-radio h-5 w-5 text-yellow-100"
                           />
@@ -319,7 +309,6 @@ const Exam = () => {
                   {!resultShow && (
                     <button
                       onClick={handleSubmit}
-                      // onClick={handleAutoSubmit}
                       className="my-6 w-full bg-gradient-to-r from-primaryBG to-[#e0f485] text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none transition-colors"
                     >
                       تسليم الامتحان👍

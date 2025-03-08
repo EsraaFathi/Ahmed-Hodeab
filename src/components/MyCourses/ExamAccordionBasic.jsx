@@ -31,8 +31,11 @@ const ParentAccordion = ({ courseDetails }) => {
 
       // Extract the `exam` IDs from the `submitedExams` array
       const submittedExamIds = submitedExams.map(
-        (submittedExam) => submittedExam.exam
+        // (submittedExam) => submittedExam.exam
+        (submittedExam) => submittedExam?.exam?._id
       );
+      // console.log(submitedExams);
+      // console.log(submittedExamIds);
 
       examData.forEach((exam) => {
         // console.log("Checking Exam ID:", exam._id);
@@ -94,23 +97,62 @@ const ParentAccordion = ({ courseDetails }) => {
                           className="flex flex-col items-center underline text-red-600 transition-colors duration-300"
                         >
                           <FaLock className="mb-1" />
-                          <span>لقد قمت بتقديم هذا الامتحان من قبل</span>
+                          <span> امتحنته قبل كده☠️ فمتحاولش تدخل☠️ </span>
                         </Link>
                       ) : (
                         // If not submitted, show the "فتح الامتحان" button
+                        // <Link
+                        //   to={`/exam`}
+                        //   className="flex flex-col items-center underline text-secondaryBG transition-colors duration-300"
+                        //   onClick={() => {
+                        //     localStorage.setItem(
+                        //       "examStartedAt",
+                        //       new Date().toISOString()
+                        //     );
+                        //     localStorage.setItem("examId", exam?._id);
+                        //   }}
+                        // >
+                        //   <FaPlay className="mb-1" />
+                        //   <span>🧐افتح الامتحان يلا 🧐</span>
+                        // </Link>
+                        // <Link
+                        //   to="/exam"
+                        //   replace
+                        //   className="flex flex-col items-center underline text-secondaryBG transition-colors duration-300"
+                        //   onClick={() => {
+                        //     localStorage.setItem(
+                        //       "examStartedAt",
+                        //       new Date().toISOString()
+                        //     );
+                        //     localStorage.setItem("examId", exam?._id);
+                        //   }}
+                        // >
+                        //   <FaPlay className="mb-1" />
+                        //   <span>🧐افتح الامتحان يلا 🧐</span>
+                        // </Link>
                         <Link
-                          to={`/exam`}
+                          to="#"
                           className="flex flex-col items-center underline text-secondaryBG transition-colors duration-300"
-                          onClick={() => {
+                          onClick={(e) => {
+                            e.preventDefault(); // Prevent default navigation
+
                             localStorage.setItem(
                               "examStartedAt",
                               new Date().toISOString()
                             );
                             localStorage.setItem("examId", exam?._id);
+
+                            // Open the exam page in a new tab
+                            const newTab = window.open("/exam", "_blank");
+
+                            if (newTab) {
+                              // Remove the current page from history so the user can't go back
+                              window.location.replace("/");
+                            }
                           }}
                         >
                           <FaPlay className="mb-1" />
-                          <span>فتح الامتحان</span>
+                          <span>🧐افتح الامتحان يلا 🧐</span>
                         </Link>
                       )}
                     </motion.div>
@@ -148,7 +190,7 @@ const ParentAccordion = ({ courseDetails }) => {
       {examData?.length > 0 ? (
         <NestedAccordion items={accordionData} />
       ) : (
-        <p>مفيش امتحانات لسه😊</p>
+        <p>😊 اطمن مفيش امتحانات لسه😊</p>
       )}
     </div>
   );

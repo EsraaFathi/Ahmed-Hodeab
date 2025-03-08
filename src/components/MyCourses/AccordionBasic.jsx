@@ -15,8 +15,8 @@ const ParentAccordion = ({ courseDetails }) => {
   const { purchasedCourses } = useUserDetails();
   const courseId = Array.isArray(courseDetails)
     ? courseDetails.map((course) => course._id)[0]
-    : courseDetails._id;
-  const lessons = courseDetails.lessons;
+    : courseDetails?._id;
+  const lessons = courseDetails?.lessons;
   // console.log("lessons", lessons);
 
   const hasPurchased = purchasedCourses?.some(
@@ -25,7 +25,7 @@ const ParentAccordion = ({ courseDetails }) => {
   // console.log(lessons);
 
   const accordionData = Array.isArray(lessons)
-    ? lessons.map((lesson) => ({
+    ? lessons?.map((lesson) => ({
         title: lesson.lessonName,
         content: (
           <div>
@@ -158,7 +158,7 @@ const ParentAccordion = ({ courseDetails }) => {
         {/* <div className="w-16 h-1  bg-secondaryBG mb-2"></div> */}
       </div>
       {/* {error && <p className="text-red-500">{error}</p>} */}
-      {lessons.length > 0 ? (
+      {lessons?.length > 0 ? (
         <NestedAccordion items={accordionData} />
       ) : (
         <p>لا توجد دروس متاحة.</p>

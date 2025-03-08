@@ -1,5 +1,4 @@
 /* eslint-disable react/prop-types */
-import { Link, useNavigate } from "react-router-dom";
 import InputField from "./InputField";
 import {
   FaUser,
@@ -19,33 +18,7 @@ import { useState } from "react";
 const RegisterForm = ({ values, handleChange, handleBlur, setFieldValue }) => {
   const { isDarkTheme } = useTheme();
   const [isFocused, setIsFocused] = useState(false);
-  // const [states, setStates] = useState([]);
-  // const [cities, setCities] = useState([]);
-  // useEffect(() => {
-  //   // Load Egypt's states
-  //   const egyptStates = State.getStatesOfCountry("EG");
-  //   // console.log(egyptStates);
-  //   // console.log(values);
 
-  //   setStates(egyptStates);
-  // }, []);
-
-  // useEffect(() => {
-  //   if (values.governorate) {
-  //     const selectedState = states.find(
-  //       (state) => state.isoCode === values.governorate
-  //     );
-  //     if (selectedState) {
-  //       const citiesOfState = City.getCitiesOfState(
-  //         "EG",
-  //         selectedState.isoCode
-  //       );
-  //       setCities(citiesOfState);
-  //     }
-  //   } else {
-  //     setCities([]);
-  //   }
-  // }, [values.governorate, states]);
   const egyptGovernorates = {
     القاهرة: [
       "15 مايو",

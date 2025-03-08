@@ -274,7 +274,7 @@ const StudentProfile = () => {
           className="fixed inset-0 bg-black opacity-50 lg:hidden"
           onClick={() => setSidebarOpen(false)}
           style={{
-            backgroundImage: "url('/images/background texture.png')",
+            backgroundImage: "url('/images/patt2min.png')",
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
@@ -286,7 +286,7 @@ const StudentProfile = () => {
           className="fixed inset-0 bg-black opacity-50 lg:hidden"
           onClick={() => setSidebarOpen(false)}
           style={{
-            backgroundImage: "url('/images/background texture.png')",
+            backgroundImage: "url('/images/patt2min.png')",
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
@@ -297,7 +297,7 @@ const StudentProfile = () => {
       <div
         className={`flex-grow p-10 ${isDarkTheme ? "bg-gray-800" : "bg-white"}`}
         style={{
-          backgroundImage: "url('/images/background texture.png')",
+          backgroundImage: "url('/images/patt2min.png')",
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
@@ -347,7 +347,14 @@ const StudentProfile = () => {
                       isDarkTheme ? "text-gray-300" : "text-gray-600"
                     }`}
                   >
-                    {userDetails.classGrade || "N/A"}{" "}
+                    {/* {userDetails.classGrade || "N/A"}{" "} */}
+                    {userDetails.classGrade === "first grade"
+                      ? "الصف الأول الثانوي"
+                      : userDetails.classGrade === "second grade"
+                      ? "الصف الثاني الثانوي"
+                      : userDetails.classGrade === "third grade"
+                      ? "الصف الثالث الثانوي"
+                      : ""}
                     {/* Default to "N/A" if classGrade is undefined */}
                   </p>
                 </div>
@@ -483,12 +490,28 @@ const StudentProfile = () => {
                             ? course.course.title
                             : "تم الحذف"}
                         </td>{" "}
-                        <td className="p-3 text-right">
+                        {/* <td className="p-3 text-right">
+                      
+
                           {course.course && course.course.classGrade
-                            ? course.course.classGrade
-                            : "تم الحذف"}
-                        </td>{" "}
+                            ? course.course.classGrade === "first grade"
+                              ? "الصف الأول الثانوي"
+                              : course.course.classGrade === "second grade"
+                                ? "الصف الثاني الثانوي"
+                                : course.course.classGrade === "third grade"
+                                  ? "الصف الثالث الثانوي"
+                                  : "تم الحذف"}
+                        </td> */}
                         <td className="p-3 text-right">
+                          {course.course?.classGrade
+                            ? {
+                                "first grade": "الصف الأول الثانوي",
+                                "second grade": "الصف الثاني الثانوي",
+                                "third grade": "الصف الثالث الثانوي",
+                              }[course.course.classGrade] || "تم الحذف"
+                            : "تم الحذف"}
+                        </td>
+                        <td className="p-3 text-center">
                           {course.course && course.course.duration
                             ? course.course.duration
                             : "تم الحذف"}

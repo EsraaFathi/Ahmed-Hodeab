@@ -14,7 +14,7 @@ const ShowSec = ({ courseDetails }) => {
   const { isDarkTheme } = useTheme();
   // console.log(courseDetails);
 
-  const imageUrl = courseDetails.image.secure_url;
+  const imageUrl = courseDetails?.image.secure_url;
   // console.log(imageUrl);
 
   const { purchasedCourses } = useUserDetails();

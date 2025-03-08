@@ -92,9 +92,9 @@ const Footer = () => {
     // </footer>
 
     <footer
-      className={` text-white ${
-        isDarkTheme ? "bg-gray-800 text-white" : "bg-primaryBG text-white"
-      } rtl transition-colors duration-300`}
+      className={` text-white 
+        ${isDarkTheme ? "bg-gray-800 text-white" : "bg-primaryBG text-white"} 
+      rtl transition-colors duration-300`}
       style={{
         // boxShadow: "0 -8px 30px rgba(0, 0, 0, 0.3)",
         backgroundImage: "url('/images/Final footer texture.png')",
@@ -168,15 +168,18 @@ const Footer = () => {
             <ul>
               <li className="w-54 mb-4 cursor-pointer bg-GreidentColor shadow-lg  hover:bg-white text-TextPrimaryColor rounded-lg p-3">
                 <Link
-                  to="/"
+                  to="https://youtu.be/fTaHcMpxINE"
                   className="hover:underline md:text-right text-center"
                 >
                   شرح طريقة التسجيل علي الموقع
                 </Link>
               </li>
               <li className="  w-54 cursor-pointer md:text-right text-center  mb-6 md:mb-0 bg-GreidentColor shadow-lg  hover:bg-white text-TextPrimaryColor rounded-lg p-3">
-                <Link to="/" className="hover:underline r">
-                  شرح طريقة التسجيل بالكود{" "}
+                <Link
+                  to="https://youtu.be/XwcHAKPpn2Y"
+                  className="hover:underline r"
+                >
+                  شرح طريقة الاشتراك للكورس بالكود{" "}
                 </Link>
               </li>
             </ul>

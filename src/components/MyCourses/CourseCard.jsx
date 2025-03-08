@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import Payment from "../payment/Payment";
 import useUserDetails from "../../../hooks/UserInfo";
+import { useTheme } from "../../ThemeProvider";
 
 const CourseCard = ({ CourseId, course, className }) => {
   const navigate = useNavigate();
@@ -27,6 +28,7 @@ const CourseCard = ({ CourseId, course, className }) => {
     const words = description.split(" ");
     return words.length > limit ? words.slice(0, limit).join(" ") : description;
   };
+  const { isDarkTheme } = useTheme();
 
   return (
     <div
@@ -35,9 +37,15 @@ const CourseCard = ({ CourseId, course, className }) => {
       className={` max-w-sm m-5  ${className}`}
     >
       {/* </div>  h-[192px] w-[341px] */}
-      <div className="bg-GreidentColor rounded-xl p-4 flex flex-col  lg:flex lg:flex-col lg:items- relative">
+      <div
+        className={`
+       ${
+         isDarkTheme ? "bg-gray-800 text-white" : "bg-GreidentColor text-white"
+       } 
+      rounded-xl p-4 flex flex-col  lg:flex lg:flex-col lg:items- relative`}
+      >
         <div
-          className="aspect-w-16 aspect-h-9 w-[256px] h-[144px] w-auto flex-none bg-cover rounded-lg text-center overflow-hidden transition-transform duration-300 ease-in-out transform hover:scale-105"
+          className="aspect-w-16 aspect-h-9  h-[144px] w-auto flex-none bg-cover rounded-lg text-center overflow-hidden transition-transform duration-300 ease-in-out transform hover:scale-105"
           style={{
             backgroundImage: `url('${
               imageUrl || "/images/DA7f-ezgif.com-gif-maker.gif"
@@ -51,19 +59,20 @@ const CourseCard = ({ CourseId, course, className }) => {
           className="mt-4 lg:mt-6 text-center lg:text-left w-full flex-grow overflow-hidden"
           style={{ maxHeight: "300px" }}
         >
-          <div className="text-right flex justify-between items-center font-bold text-xl">
-            {!hasPurchased && (
+          <div className=" flex justify-between  items-center font-bold text-xl">
+            {!hasPurchased && course && (
               <motion.button
                 style={{ fontFamily: "Lamsa-font-Bold" }}
-                className="flex bg-gradient-to-r from-primaryBG to-GreidentColor2 text-white px-1 py-1 rounded-md text-sm m-2 transition-all duration-300 transform  "
+                className="flex bg-gradient-to-r from-primaryBG to-GreidentColor2 text-white px-1 py-1 rounded-md text-sm m-2 transition-all duration-300 transform"
               >
-                جنيها
+                {!course.isFree && "جنيها"}
                 <div className="bg-[#F8F8F8] text-gray-600 px-1 ml-2 rounded-md">
-                  {course ? (course.isFree ? "مجاني" : course.price) : "N/A"}
+                  {course.isFree ? "🎉 ببلاش" : course.price || "N/A"}
                 </div>
               </motion.button>
             )}
-            <span className="text-right text-black bg-clip-text">
+
+            <span className=" text-2xl bg-gradient-to-r from-GreidentColor2 to-secondaryBG bg-clip-text text-transparent ">
               {course && course.title
                 ? course.title.length > 20
                   ? `${course.title.slice(0, 20)}... `
@@ -110,9 +119,9 @@ const CourseCard = ({ CourseId, course, className }) => {
               <motion.button
                 onClick={handleViewContent}
                 style={{ fontFamily: "Lamsa-font-Bold" }}
-                className="bg-GreidentColor border-2 border-primaryBG text-primaryBG hover:border-0 hover:bg-gradient-to-r from-primaryBG to-GreidentColor2 hover:text-white px-2 py-1 rounded-md text-lg w-full md:w-auto transition-all duration-300 transform"
+                className="bg-GreidentColor border-2 border-primaryBG text-primaryBG hover:border-transparent hover:bg-gradient-to-r from-primaryBG to-GreidentColor2 hover:text-white px-2 py-1 rounded-md text-lg w-full md:w-auto transition-all duration-300 transform"
               >
-                محتوي الكورس
+                👨‍🎓 محتوي الكورس
               </motion.button>
             </>
           ) : (
